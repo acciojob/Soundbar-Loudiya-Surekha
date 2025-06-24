@@ -1,21 +1,26 @@
 let currentAudio = null;
+
+// Wait for DOM to load
 document.addEventListener("DOMContentLoaded", function () {
   const buttons = document.querySelectorAll(".btn");
-  const stopBtn = document.querySelector(".stop");
+  const stopButton = document.querySelector(".stop");
 
   buttons.forEach(button => {
     button.addEventListener("click", () => {
-      const soundName = button.textContent.trim();
-      if (currentAudio) {
+      const soundId = button.getAttribute("data-sound");
+      const audio = document.getElementById(soundId);
+
+      if (currentAudio && currentAudio !== audio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
       }
-      currentAudio = new Audio("sounds/" + soundName + ".mp3");
+
+      currentAudio = audio;
       currentAudio.play();
     });
   });
 
-  stopBtn.addEventListener("click", () => {
+  stopButton.addEventListener("click", () => {
     if (currentAudio) {
       currentAudio.pause();
       currentAudio.currentTime = 0;
